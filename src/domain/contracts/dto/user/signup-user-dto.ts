@@ -1,6 +1,6 @@
-import { User } from "../../entities/user";
+import { User } from "../../../entities/user";
 
-export interface SignupDto {
+export interface SignupUserDto {
   email: User["email"];
   username: User["username"];
   fullName: User["fullName"];

@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { User, UserUID } from "../../entities/user";
-import { SignupDto } from "../dto/create-user-dto";
+import { SignupUserDto } from "../dto/user/signup-user-dto";
 
 export abstract class AuthRepository {
-  abstract signup(user: SignupDto): Observable<any>;
+  abstract signup(user: SignupUserDto): Observable<any>;
   abstract login(uid: UserUID, password: User["password"]): Promise<string>;
 }
