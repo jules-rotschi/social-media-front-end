@@ -1,9 +1,9 @@
 import { User } from "../../../entities/user";
 
-export interface SignupUserDto {
+export interface SignupUserInputDTO {
   email: User["email"];
   username: User["username"];
   fullName: User["fullName"];
   password: User["password"];
-  passwordConfirmation: User["password"]
+  passwordConfirmation: User["password"];
 }

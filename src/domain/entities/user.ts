@@ -1,13 +1,24 @@
-type Email = string
-
-export interface User {
-  id: number;
+export class User {
+  id?: number;
   username: string;
+  email: string;
   fullName: string;
-  email: Email;
   password: string;
-  description: string | null;
-  picture: string | null;
+  passwordConfirmation?: string;
+  description?: string;
+  picture?: string;
+
+  constructor(
+    username: string,
+    email: string,
+    fullName: string,
+    password: string,
+  ) {
+    this.username = username;
+    this.email = email;
+    this.fullName = fullName;
+    this.password = password;
+  }
 }
 
 export type UserUID = User["email"] | User["username"];

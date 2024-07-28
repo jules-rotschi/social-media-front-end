@@ -16,7 +16,7 @@ export class SignupFormComponent {
 
   signupForm = new FormGroup<SignupForm>({
     username: new FormControl(
-      '',
+      'marc',
       {
         nonNullable: true,
         validators: [
@@ -27,7 +27,7 @@ export class SignupFormComponent {
       }
     ),
     email: new FormControl(
-      '',
+      'marc@example.com',
       {
         nonNullable: true,
         validators: [
@@ -37,7 +37,7 @@ export class SignupFormComponent {
       }
     ),
     fullName: new FormControl(
-      '',
+      'Marc',
       {
         nonNullable: true,
         validators: [
@@ -46,7 +46,7 @@ export class SignupFormComponent {
       }
     ),
     password: new FormControl(
-      '',
+      'This is my password',
       {
         nonNullable: true,
         validators: [
@@ -56,7 +56,7 @@ export class SignupFormComponent {
       }
     ),
     passwordConfirmation: new FormControl(
-      '',
+      'This is my password',
       {
         nonNullable: true,
         validators: [
@@ -66,7 +66,7 @@ export class SignupFormComponent {
     )
   });
 
-  token?: string;
+  data?: any;
   errors?: any;
 
   constructor(
@@ -75,17 +75,16 @@ export class SignupFormComponent {
 
   onSubmit() {
     const data = this.signupForm.getRawValue();
-    
     this.signupUsecase.handle(data).subscribe(
-      (response) => {
-        console.log("response", response);
-        if (response.body) {
-          this.token = response.body.token;
+      {
+        next: (response) => {
+          console.log("Réponse HTTP", response);
+          this.data = response.data;
+        },
+        error: (error) => {
+          console.log("Erreur HTTP", error);
+          this.errors = error.errors;
         }
-      },
-      (error) => {
-        console.log(error);
-        this.errors = error.error.map((err: any) => err.message);
       }
     )
   }

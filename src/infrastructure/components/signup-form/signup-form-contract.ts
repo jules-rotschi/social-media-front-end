@@ -1,10 +1,10 @@
 import { FormControl } from "@angular/forms";
-import { SignupUserDto } from "../../../domain/contracts/dto/user/signup-user-dto";
+import { SignupUserInputDTO } from "../../../domain/contracts/dto/user/signup-user-input-dto";
 
 export interface SignupForm {
-  username: FormControl<SignupUserDto["username"]>;
-  email: FormControl<SignupUserDto["email"]>;
-  fullName: FormControl<SignupUserDto["fullName"]>;
-  password: FormControl<SignupUserDto["password"]>;
-  passwordConfirmation: FormControl<SignupUserDto["passwordConfirmation"]>;
+  username: FormControl<SignupUserInputDTO["username"]>;
+  email: FormControl<SignupUserInputDTO["email"]>;
+  fullName: FormControl<SignupUserInputDTO["fullName"]>;
+  password: FormControl<SignupUserInputDTO["password"]>;
+  passwordConfirmation: FormControl<SignupUserInputDTO["passwordConfirmation"]>;
 }
