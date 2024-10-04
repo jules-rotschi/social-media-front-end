@@ -1,0 +1,38 @@
+@if (link && externalLink) {
+  <a [href]='link' target="_blank" [class]='className'>
+    @if (icon) {
+      <span class="icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          {{icon}}
+        </svg>
+      </span>
+    }
+    <span class="label">{{label}}</span>
+  </a>
+}
+
+@else if (link) {
+  <a [routerLink]='link' [class]='className'>
+    @if (icon) {
+      <span class="icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          {{icon}}
+        </svg>
+      </span>
+    }
+    <span class="label">{{label}}</span>
+  </a>
+}
+
+@else {
+  <button [type]='buttonType' [class]='className'>
+    @if (icon) {
+      <span class="icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          {{icon}}
+        </svg>
+      </span>
+    }
+    <span class="label">{{label}}</span>
+  </button>
+}

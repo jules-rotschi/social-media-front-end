@@ -1,0 +1,46 @@
+<main class="container">
+  <article>
+    <a href="#" class="button button-outlined">
+      <span class="label">Retour</span>
+    </a>
+    <h1>Inscrpition</h1>
+    @for (error of errors(); track error.message) {
+      <p>{{ error.message }}</p>
+    }
+    <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+      <fieldset>
+        <div>
+          <label for="email">E-mail</label>
+          <input type="text" formControlName="email" id="email">
+          @if (email!.invalid && email!.dirty && email!.touched && email!.hasError('required')) {
+            <legend>
+              Vous devez entrer un e-mail.
+            </legend>
+          }
+          @if (email!.invalid && email!.dirty && email!.touched && email!.hasError('email')) {
+            <legend>
+              L'e-mail est invalide.
+            </legend>
+          }
+        </div>
+        <div>
+          <label for="username">Nom d'utilisateur</label>
+          <input type="text" formControlName="username" id="username">
+        </div>
+        <div>
+          <label for="name">Nom complet ou pseudonyme</label>
+          <input type="text" formControlName="fullName" id="name">
+        </div>
+        <div>
+          <label for="password">Mot de passe</label>
+          <input type="password" formControlName="password" id="password">
+        </div>
+        <div>
+          <label for="password-confirmation">Mot de passe (confirmation)</label>
+          <input type="password" formControlName="passwordConfirmation" id="password-confirmation">
+        </div>
+      </fieldset>
+      <button type="submit">Créer mon compte</button>
+    </form>
+  </article>
+</main>

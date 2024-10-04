@@ -1,22 +1,24 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { SignupUsecase } from '../../../domain/usecases/auth/signup-usecase';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SignupForm } from './signup-form-contract';
-import { catchError } from 'rxjs';
+import { SignupForm } from './signup-contract';
+import { InputComponent } from '../../components/input/input.component';
+import { StorageRepository } from '../../../domain/contracts/repositories/storage-repository';
+import { HttpError } from '../../errors/http-error';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-signup-form',
+  selector: 'sm-signup',
   standalone: true,
-  imports: [NgIf, NgFor, ReactiveFormsModule],
-  templateUrl: './signup-form.component.html',
-  styleUrl: './signup-form.component.scss'
+  imports: [ReactiveFormsModule, InputComponent],
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss'
 })
-export class SignupFormComponent {
+export class SignupComponent implements OnDestroy {
 
   signupForm = new FormGroup<SignupForm>({
     username: new FormControl(
-      'marc',
+      '',
       {
         nonNullable: true,
         validators: [
@@ -27,7 +29,7 @@ export class SignupFormComponent {
       }
     ),
     email: new FormControl(
-      'marc@example.com',
+      '',
       {
         nonNullable: true,
         validators: [
@@ -37,7 +39,7 @@ export class SignupFormComponent {
       }
     ),
     fullName: new FormControl(
-      'Marc',
+      '',
       {
         nonNullable: true,
         validators: [
@@ -46,7 +48,7 @@ export class SignupFormComponent {
       }
     ),
     password: new FormControl(
-      'This is my password',
+      '',
       {
         nonNullable: true,
         validators: [
@@ -56,7 +58,7 @@ export class SignupFormComponent {
       }
     ),
     passwordConfirmation: new FormControl(
-      'This is my password',
+      '',
       {
         nonNullable: true,
         validators: [
@@ -66,26 +68,34 @@ export class SignupFormComponent {
     )
   });
 
-  data?: any;
-  errors?: any;
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  subscription?: Subscription;
+  errors = signal<HttpError[]>([]);
 
   constructor(
-    private signupUsecase: SignupUsecase
+    private signupUsecase: SignupUsecase,
+    private storageRepository: StorageRepository
   ) {}
 
   onSubmit() {
     const data = this.signupForm.getRawValue();
-    this.signupUsecase.handle(data).subscribe(
+    this.subscription = this.signupUsecase.handle(data).subscribe(
       {
         next: (response) => {
-          console.log("Réponse HTTP", response);
-          this.data = response.data;
+          this.errors.set([]);
+          this.storageRepository.storeToken(response.data.token);
         },
-        error: (error) => {
-          console.log("Erreur HTTP", error);
-          this.errors = error.errors;
+        error: ({ error }) => {
+          this.errors.set(error.errors);
         }
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

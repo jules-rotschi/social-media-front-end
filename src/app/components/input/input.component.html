@@ -1,0 +1,12 @@
+<div class="input">
+  <label [for]='inputId'>{{label}}</label>
+  <div class="field">
+    <input [type]='inputType' [id]='inputId' [formControlName]='formControlName' [placeholder]='inputPlaceholder' />
+    @if (unit) {
+      <span class="unit">{{unit}}</span>
+    }
+  </div>
+  @if (error || legend) {
+    <legend>{{error || legend}}</legend>
+  }
+</div>

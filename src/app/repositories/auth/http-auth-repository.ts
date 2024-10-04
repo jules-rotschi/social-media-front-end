@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { AuthRepository } from "../../../domain/contracts/repositories/auth-repository";
-import { UserUID, User } from "../../../domain/entities/user";
+import { User } from "../../../domain/entities/user";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 

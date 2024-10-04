@@ -1,0 +1,4 @@
+@use "../primitive/" as *;
+
+$bl-sys-font-family-headings: $bl-prim-font-family-unbounded, $bl-prim-default-font-family;
+$bl-sys-font-family-body: $bl-prim-font-family-figtree, $bl-prim-default-font-family;
