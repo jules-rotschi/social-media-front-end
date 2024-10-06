@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../icon/icon.component';
 
@@ -9,7 +9,7 @@ import { IconComponent } from '../icon/icon.component';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnInit {
   @Input({required: true}) label = 'Label';
   @Input({required: true}) buttonStyle: 'filled' | 'outlined' | 'ghost' = 'filled';
   @Input() buttonType: 'button' | 'reset' | 'submit' = 'button';
@@ -18,7 +18,13 @@ export class ButtonComponent {
   @Input() link?: string;
   @Input() externalLink?: boolean;
 
-  styleClass = `button-${this.buttonStyle}`;
-  colorClass = this.color ? ` button-${this.color}` : '';
-  className = `button ${this.styleClass + this.colorClass}`
+  styleClass = '';
+  colorClass = '';
+  className = '';
+
+  ngOnInit(): void {
+    this.styleClass = `button-${this.buttonStyle}`;
+    this.colorClass = this.color ? ` button-${this.color}` : '';
+    this.className = `button ${this.styleClass + this.colorClass}`
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, OnChanges, OnDestroy, signal, SimpleChanges } from '@angular/core';
 import { SignupUsecase } from '../../../domain/usecases/auth/signup-usecase';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignupForm } from './signup-contract';
@@ -6,15 +6,16 @@ import { InputComponent } from '../../components/input/input.component';
 import { StorageRepository } from '../../../domain/contracts/repositories/storage-repository';
 import { HttpError } from '../../errors/http-error';
 import { Subscription } from 'rxjs';
+import { ButtonComponent } from "../../components/button/button.component";
 
 @Component({
   selector: 'sm-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, InputComponent],
+  imports: [ReactiveFormsModule, InputComponent, ButtonComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
-export class SignupComponent implements OnDestroy {
+export class SignupComponent implements OnChanges, OnDestroy {
 
   signupForm = new FormGroup<SignupForm>({
     username: new FormControl(
@@ -68,6 +69,14 @@ export class SignupComponent implements OnDestroy {
     )
   });
 
+  validationErrors = {
+    email: '',
+    username: '',
+    fullName: '',
+    password: '',
+    passwordConfirmation: '',
+  };
+
   get email() {
     return this.signupForm.get('email');
   }
@@ -93,6 +102,15 @@ export class SignupComponent implements OnDestroy {
         }
       }
     )
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.email?.invalid && this.email?.dirty && this.email?.touched && this.email?.hasError('required')) {
+      this.validationErrors.email = 'Vous devez entrer un e-mail.'
+    }
+    if (this.email?.invalid && this.email?.dirty && this.email?.touched && this.email?.hasError('email')) {
+        this.validationErrors.email = 'L\'e-mail est invalide.'
+    }
   }
 
   ngOnDestroy() {

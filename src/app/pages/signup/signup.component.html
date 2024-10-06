@@ -1,28 +1,23 @@
 <main class="container">
   <article>
-    <a href="#" class="button button-outlined">
-      <span class="label">Retour</span>
-    </a>
+    <sm-button label="Retour" buttonStyle="ghost" link="/"/>
     <h1>Inscrpition</h1>
     @for (error of errors(); track error.message) {
       <p>{{ error.message }}</p>
     }
     <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
       <fieldset>
-        <div>
+        <!-- <sm-input
+          label="E-mail"
+          inputType="text"
+          inputId="email"
+          formControlName="email"
+          [error]="validationErrors.email"
+        /> -->
+        <!-- <div>
           <label for="email">E-mail</label>
-          <input type="text" formControlName="email" id="email">
-          @if (email!.invalid && email!.dirty && email!.touched && email!.hasError('required')) {
-            <legend>
-              Vous devez entrer un e-mail.
-            </legend>
-          }
-          @if (email!.invalid && email!.dirty && email!.touched && email!.hasError('email')) {
-            <legend>
-              L'e-mail est invalide.
-            </legend>
-          }
-        </div>
+          <input type="text" formControlName="email" id="email">          
+        </div> -->
         <div>
           <label for="username">Nom d'utilisateur</label>
           <input type="text" formControlName="username" id="username">
