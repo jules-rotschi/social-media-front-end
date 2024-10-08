@@ -1,6 +1,6 @@
-import { Component, OnChanges, OnDestroy, signal, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { SignupUsecase } from '../../../domain/usecases/auth/signup-usecase';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignupForm } from './signup-contract';
 import { InputComponent } from '../../components/input/input.component';
 import { StorageRepository } from '../../../domain/contracts/repositories/storage-repository';
@@ -15,7 +15,7 @@ import { ButtonComponent } from "../../components/button/button.component";
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
-export class SignupComponent implements OnChanges, OnDestroy {
+export class SignupComponent implements OnDestroy {
 
   signupForm = new FormGroup<SignupForm>({
     username: new FormControl(
@@ -68,21 +68,29 @@ export class SignupComponent implements OnChanges, OnDestroy {
       }
     )
   });
-
-  validationErrors = {
-    email: '',
-    username: '',
-    fullName: '',
-    password: '',
-    passwordConfirmation: '',
-  };
+  
+  get username() {
+    return this.signupForm.get('username');
+  }
 
   get email() {
     return this.signupForm.get('email');
   }
 
+  get fullName() {
+    return this.signupForm.get('fullName');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
+
+  get passwordConfirmation() {
+    return this.signupForm.get('passwordConfirmation');
+  }
+
   subscription?: Subscription;
-  errors = signal<HttpError[]>([]);
+  httpErrors = signal<HttpError[]>([]);
 
   constructor(
     private signupUsecase: SignupUsecase,
@@ -94,22 +102,61 @@ export class SignupComponent implements OnChanges, OnDestroy {
     this.subscription = this.signupUsecase.handle(data).subscribe(
       {
         next: (response) => {
-          this.errors.set([]);
+          this.httpErrors.set([]);
           this.storageRepository.storeToken(response.data.token);
         },
         error: ({ error }) => {
-          this.errors.set(error.errors);
+          this.httpErrors.set(error.errors);
         }
       }
     )
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.email?.invalid && this.email?.dirty && this.email?.touched && this.email?.hasError('required')) {
-      this.validationErrors.email = 'Vous devez entrer un e-mail.'
+  usernameError = signal('');
+  emailError = signal('');
+  fullNameError = signal('');
+  passwordError = signal('');
+  passwordConfirmationError = signal('');
+
+  onInputChange() {   
+    if (this.username?.invalid && this.username?.dirty && this.username?.touched && this.username?.hasError('required')) {
+      this.usernameError.set('Vous devez entrer un nom d\'utilisateur');
+    } else if (this.username?.invalid && this.username?.dirty && this.username?.touched && this.username?.hasError('minlength')) {
+      this.usernameError.set('Votre nom d\'utilisateur doit contenir au moins 2 caractères');
+    } else if (this.username?.invalid && this.username?.dirty && this.username?.touched && this.username?.hasError('pattern')) {
+      this.usernameError.set('Le nom d\'utilisateur ne doit contenir que des lettres minuscules, des chiffres, et ces trois caractères spéciaux : ., _, -');
+    } else {
+      this.usernameError.set('');
     }
+
     if (this.email?.invalid && this.email?.dirty && this.email?.touched && this.email?.hasError('email')) {
-        this.validationErrors.email = 'L\'e-mail est invalide.'
+      this.emailError.set('L\'e-mail est invalide.');
+    } else if (this.email?.invalid && this.email?.dirty && this.email?.touched && this.email?.hasError('required')) {
+      this.emailError.set('Vous devez entrer un e-mail.');
+    } else {
+      this.emailError.set('');
+    }
+
+    if (this.fullName?.invalid && this.fullName?.dirty && this.fullName?.touched && this.fullName?.hasError('required')) {
+      this.fullNameError.set('Vous devez entrer un nom.');
+    } else {
+      this.fullNameError.set('');
+    }
+
+    if (this.password?.invalid && this.password?.dirty && this.password?.touched && this.password?.hasError('required')) {
+      this.passwordError.set('Vous devez entrer un mot de passe.');
+    } else if (this.password?.invalid && this.password?.dirty && this.password?.touched && this.password?.hasError('minlength')) {
+      this.passwordError.set('Votre mot de passe doit contenir au moins 12 caractères.');
+    } else {
+      this.passwordError.set('');
+    }
+
+    if (this.passwordConfirmation?.invalid && this.passwordConfirmation?.dirty && this.passwordConfirmation?.touched && this.passwordConfirmation?.hasError('required')) {
+      this.passwordConfirmationError.set('Vous devez confirmer votre mot de passe.');
+    } else if (this.passwordConfirmation?.dirty && this.passwordConfirmation?.touched && this.passwordConfirmation?.value !== this.password?.value) {
+      this.passwordConfirmationError.set('Les mots de passe ne correspondent pas');
+    } else {
+      this.passwordConfirmationError.set('');
     }
   }
 

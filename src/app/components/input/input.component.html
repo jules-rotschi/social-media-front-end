@@ -1,7 +1,15 @@
 <div class="input">
   <label [for]='inputId'>{{label}}</label>
   <div class="field">
-    <input [type]='inputType' [id]='inputId' [formControlName]='formControlName' [placeholder]='inputPlaceholder' />
+    <input
+      [type]='inputType'
+      [id]='inputId'
+      [placeholder]='inputPlaceholder'
+      [formControl]='formControl'
+      [value]='value'
+      (input)='onChange()'
+      (blur)='onChange()'
+    />
     @if (unit) {
       <span class="unit">{{unit}}</span>
     }

@@ -17,6 +17,7 @@ export class ButtonComponent implements OnInit {
   @Input() icon?: IconComponent;
   @Input() link?: string;
   @Input() externalLink?: boolean;
+  @Input() disabled?: boolean;
 
   styleClass = '';
   colorClass = '';
