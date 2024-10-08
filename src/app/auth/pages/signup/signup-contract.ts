@@ -1,5 +1,5 @@
 import { FormControl } from "@angular/forms";
-import { SignupUserInputDTO } from "../../../domain/contracts/dto/user/signup-user-input-dto";
+import { SignupUserInputDTO } from "../../../../domain/contracts/dto/user/signup-user-input-dto";
 
 export interface SignupForm {
   username: FormControl<SignupUserInputDTO["username"]>;

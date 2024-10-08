@@ -26,6 +26,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() inputPlaceholder: string = '';
   @Input() legend?: string;
   @Input() unit?: string;
+  @Input() invalid?: boolean;
   @Input() error?: string;
 
   writeValue() {}

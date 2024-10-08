@@ -1,51 +1,42 @@
-@use '../tokens' as *;
 @use '../abstract' as *;
 
 .input {
 
   html[data-theme="light"] & {
-    --bl-foreground-color: #{$bl-sys-color-neutral-800};
-    --bl-foreground-color-secondary: #{$bl-sys-color-neutral-400};
-    --bl-active-stroke-color: #{$bl-sys-color-primary-700};
-    --bl-error-foreground-color: #{$bl-sys-color-critical-800};
-    --bl-disabled-foreground-color: #{$bl-sys-color-neutral-300};
-    --bl-disabled-foreground-color-secondary: #{$bl-sys-color-neutral-100};
+    --bl-foreground-color: #{$neutral-700};
+    --bl-foreground-color-secondary: #{$neutral-300};
+    --bl-active-stroke-color: #{$primary-900};
+    --bl-error-foreground-color: #{$critical-700};
+    --bl-disabled-foreground-color: #{$neutral-300};
+    --bl-disabled-foreground-color-secondary: #{$neutral-100};
   }
   
   html[data-theme="dark"] & {
-    --bl-foreground-color: #{$bl-sys-color-neutral-100};
-    --bl-foreground-color-secondary: #{$bl-sys-color-neutral-600};
-    --bl-active-stroke-color: #{$bl-sys-color-secondary-400};
-    --bl-error-foreground-color: #{$bl-sys-color-critical-500};
-    --bl-disabled-foreground-color: #{$bl-sys-color-neutral-700};
-    --bl-disabled-foreground-color-secondary: #{$bl-sys-color-neutral-900};
+    --bl-foreground-color: #{$neutral-300};
+    --bl-foreground-color-secondary: #{$neutral-700};
+    --bl-active-stroke-color: #{$primary-700};
+    --bl-error-foreground-color: #{$critical-500};
+    --bl-disabled-foreground-color: #{$neutral-700};
+    --bl-disabled-foreground-color-secondary: #{$neutral-900};
   }
 
-  width: fit-content;
   position: relative;
-
-  .label-container {
-    position: absolute;
-    left: 12px;
-    top: -8px;
-    padding-inline: 2px;
-    background-color: var(--bl-background-color);
-  }
 
   label {
     @include label-2();
     display: block;
     height: fit-content;
     color: var(--bl-foreground-color);
+    margin-left: 0.5rem;
+    margin-bottom: 2px;
   }
 
   .field {
-    width: fit-content;
     height: 2rem;
     border-radius: 0.5rem;
     padding-inline: 0.5rem;
-    outline: 1px solid var(--bl-foreground-color);
-    outline-offset: -1px;
+    outline: 1px solid var(--bl-foreground-color-secondary);
+    // outline-offset: -1px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -55,7 +46,7 @@
       width: 100%;
       height: 100%;
       margin: 0;
-      z-index: 10;
+      z-index: 1;
       border: none;
       background: none;
       color: var(--bl-foreground-color);
@@ -78,8 +69,8 @@
       color: var(--bl-foreground-color-secondary);
     }
 
-    @include above-breakpoint('small') {
-      height: 2.5rem;
+    &:hover {
+      outline-color: var(--bl-foreground-color);
     }
 
     &:has(input:focus-within) {
@@ -92,13 +83,15 @@
   }
 
   legend {
-    @include quiet-2();
+    @include quiet-1();
+    margin-top: 2px;
     margin-left: 14px;
     color: var(--bl-foreground-color);
   }
 
   &.input--error, &:has(input:invalid) {
     --bl-foreground-color: var(--bl-error-foreground-color) !important;
+    --bl-foreground-color-secondary: var(--bl-error-foreground-color) !important;
     --bl-active-stroke-color: var(--bl-error-foreground-color) !important;
   }
 
@@ -110,7 +103,7 @@
     }
 
     .field {
-      outline-color: var(--bl-disabled-foreground-color);
+      outline-color: var(--bl-disabled-foreground-color-secondary);
     }
 
     label, input, legend {

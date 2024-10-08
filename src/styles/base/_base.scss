@@ -1,16 +1,16 @@
-// @use '../abstract' as *;
+@use '../abstract' as *;
 
-// *::selection {
-//   html[data-theme="light"] & {
-//     background-color: $primary-800;
-//     color: $neutral-050;
-//   }
+*::selection {
+  html[data-theme="light"] & {
+    background-color: $primary-700;
+    color: $neutral-050;
+  }
 
-//   html[data-theme="dark"] & {
-//     background-color: $secondary-400;
-//     color: $neutral-950;
-//   }
-// }
+  html[data-theme="dark"] & {
+    background-color: $secondary-300;
+    color: $neutral-950;
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   :root {
@@ -23,55 +23,55 @@ body {
   overflow-x: hidden;
   font-size: 16px;
 
-  // html[data-theme="light"] & {
-  //   --bl-background-color: #{$light};
-  //   --bl-foreground-color: #{$neutral-950};
-  // }
+  html[data-theme="light"] & {
+    --bl-background-color: #{$light};
+    --bl-foreground-color: #{$neutral-950};
+  }
 
-  // html[data-theme="dark"] & {
-  //   --bl-background-color: #{$neutral-950};
-  //   --bl-foreground-color: #{$light};
-  // }
+  html[data-theme="dark"] & {
+    --bl-background-color: #{$neutral-950};
+    --bl-foreground-color: #{$light};
+  }
 
-  // background-color: var(--bl-background-color);
-  // color: var(--bl-foreground-color);
+  background-color: var(--bl-background-color);
+  color: var(--bl-foreground-color);
 }
 
-// h1 {
-//   @include headline-1();
-// }
+h1 {
+  @include headline-1();
+}
 
-// h2 {
-//   @include headline-2();
-// }
+h2 {
+  @include headline-2();
+}
 
-// h3 {
-//   @include headline-3();
-// }
+h3 {
+  @include headline-3();
+}
 
-// h4 {
-//   @include title-1();
-// }
+h4 {
+  @include title-1();
+}
 
-// h5 {
-//   @include title-2();
-// }
+h5 {
+  @include title-2();
+}
 
-// h6, dt {
-//   @include title-3();
-// }
+h6, dt {
+  @include title-3();
+}
 
-// p, li, dd, div, span {
-//   @include body-2();
-// }
+p, li, dd, div, span {
+  @include body-2();
+}
 
-// legend {
-//   @include quiet-1();
-// }
+legend {
+  @include quiet-1();
+}
 
-// small {
-//   @include quiet-2();
-// }
+small {
+  @include quiet-2();
+}
 
 abbr[title] {
   cursor: help;

@@ -1,0 +1,58 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="auth-form">
+  <fieldset>
+    <sm-input
+      label="E-mail"
+      inputType="text"
+      inputId="email"
+      [formControl]="signupForm.controls.email"
+      [value]="email!.value"
+      [invalid]="email?.invalid && email?.dirty && email?.touched"
+      [error]="emailError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+    <sm-input
+      label="Nom d'utilisateur"
+      inputType="text"
+      inputId="username"
+      [formControl]="signupForm.controls.username"
+      [value]="username!.value"
+      [invalid]="username?.invalid && username?.dirty && username?.touched"
+      [error]="usernameError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+    <sm-input
+      label="Nom complet ou pseudonyme"
+      inputType="text"
+      inputId="fullname"
+      [formControl]="signupForm.controls.fullName"
+      [value]="fullName!.value"
+      [invalid]="fullName?.invalid && fullName?.dirty && fullName?.touched"
+      [error]="fullNameError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+    <sm-input
+      label="Mot de passe"
+      inputType="text"
+      inputId="password"
+      [formControl]="signupForm.controls.password"
+      [value]="password!.value"
+      [invalid]="password?.invalid && password?.dirty && password?.touched"
+      [error]="passwordError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+    <sm-input
+      label="Mot de passe (confirmation)"
+      inputType="text"
+      inputId="password-confirmation"
+      [formControl]="signupForm.controls.passwordConfirmation"
+      [value]="passwordConfirmation!.value"
+      [invalid]="
+        (passwordConfirmation?.invalid && passwordConfirmation?.dirty && passwordConfirmation?.touched)
+        || (passwordConfirmation?.value !== password?.value && passwordConfirmation?.dirty && passwordConfirmation?.touched)
+      "
+      [error]="passwordConfirmationError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+  </fieldset>
+  <sm-button label="Créer mon compte" buttonType="submit" buttonStyle="filled" [disabled]="!signupForm.valid || passwordConfirmation?.value !== password?.value" />
+</form>

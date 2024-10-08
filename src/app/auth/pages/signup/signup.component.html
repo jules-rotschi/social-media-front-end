@@ -1,0 +1,14 @@
+<main class="page-content container">
+  <article class="form-card">
+    <sm-button label="Retour" buttonStyle="ghost" link="/" class="back-button"/>
+    <h1 class="card-title">Inscription</h1>
+    @if (httpErrors()) {
+      <div class="form-errors">
+        @for (error of httpErrors(); track error.message) {
+          <p><b>{{ error.message }}</b></p>
+        }
+      </div>
+    }
+    <sm-signup-form [signup]="signup.bind(this)"></sm-signup-form>
+  </article>
+</main>

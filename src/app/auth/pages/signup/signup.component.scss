@@ -1,0 +1,40 @@
+@use '../../../../styles/abstract' as *;
+
+.container {
+  @include above-breakpoint('small') {
+    display: grid;
+    place-items: center;
+  }
+}
+
+.form-card {
+  padding-top: 4rem;
+  
+  @include above-breakpoint('small') {
+    width: 28.5rem;
+    padding-top: 6rem;
+  }
+}
+
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+
+  @include above-breakpoint('small') {
+    top: 2rem;
+    left: 2rem;
+  }
+}
+
+sm-signup-form {
+  width: 100%;
+
+  @include under-breakpoint('small') {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+}

@@ -1,21 +1,18 @@
-import { Component, OnDestroy, signal } from '@angular/core';
-import { SignupUsecase } from '../../../domain/usecases/auth/signup-usecase';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SignupForm } from './signup-contract';
+import { Component, Input, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SignupForm } from '../pages/signup/signup-contract';
 import { InputComponent } from '../../components/input/input.component';
-import { StorageRepository } from '../../../domain/contracts/repositories/storage-repository';
-import { HttpError } from '../../errors/http-error';
-import { Subscription } from 'rxjs';
-import { ButtonComponent } from "../../components/button/button.component";
+import { ButtonComponent } from '../../components/button/button.component';
+import { SignupUserInputDTO } from '../../../domain/contracts/dto/user/signup-user-input-dto';
 
 @Component({
-  selector: 'sm-signup',
+  selector: 'sm-signup-form',
   standalone: true,
   imports: [ReactiveFormsModule, InputComponent, ButtonComponent],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+  templateUrl: './signup-form.component.html',
+  styleUrl: './signup-form.component.scss'
 })
-export class SignupComponent implements OnDestroy {
+export class SignupFormComponent {
 
   signupForm = new FormGroup<SignupForm>({
     username: new FormControl(
@@ -68,7 +65,7 @@ export class SignupComponent implements OnDestroy {
       }
     )
   });
-  
+
   get username() {
     return this.signupForm.get('username');
   }
@@ -89,29 +86,6 @@ export class SignupComponent implements OnDestroy {
     return this.signupForm.get('passwordConfirmation');
   }
 
-  subscription?: Subscription;
-  httpErrors = signal<HttpError[]>([]);
-
-  constructor(
-    private signupUsecase: SignupUsecase,
-    private storageRepository: StorageRepository
-  ) {}
-
-  onSubmit() {
-    const data = this.signupForm.getRawValue();
-    this.subscription = this.signupUsecase.handle(data).subscribe(
-      {
-        next: (response) => {
-          this.httpErrors.set([]);
-          this.storageRepository.storeToken(response.data.token);
-        },
-        error: ({ error }) => {
-          this.httpErrors.set(error.errors);
-        }
-      }
-    )
-  }
-
   usernameError = signal('');
   emailError = signal('');
   fullNameError = signal('');
@@ -124,7 +98,7 @@ export class SignupComponent implements OnDestroy {
     } else if (this.username?.invalid && this.username?.dirty && this.username?.touched && this.username?.hasError('minlength')) {
       this.usernameError.set('Votre nom d\'utilisateur doit contenir au moins 2 caractères');
     } else if (this.username?.invalid && this.username?.dirty && this.username?.touched && this.username?.hasError('pattern')) {
-      this.usernameError.set('Le nom d\'utilisateur ne doit contenir que des lettres minuscules, des chiffres, et ces trois caractères spéciaux : ., _, -');
+      this.usernameError.set('Ce nom d\'utilisateur contient un caractère non-authorisé');
     } else {
       this.usernameError.set('');
     }
@@ -160,7 +134,10 @@ export class SignupComponent implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
+  @Input() signup(data: SignupUserInputDTO): void {};
+
+  onSubmit() {
+    const data = this.signupForm.getRawValue();
+    this.signup(data);
   }
 }

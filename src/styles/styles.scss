@@ -1,1 +1,83 @@
-// @use './base';
+@use './base';
+@use './components';
+
+@use './abstract' as *;
+
+:root {
+  --bl-header-height: 0px;
+  --bl-footer-height: 0px;
+}
+
+.container:has(> .form-card) {
+  html[data-theme="light"] & {
+    background: linear-gradient(135deg, $primary-050 35%, $primary-300);
+  }
+
+  html[data-theme="dark"] & {
+    background: linear-gradient(135deg, $primary-950, $primary-800);
+  }
+}
+
+.form-card {
+  position: relative;
+  background-color: var(--bl-background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  
+  @include above-breakpoint('small') {
+    border-radius: 2rem;
+  }
+
+  @include under-breakpoint('small') {
+    width: 100vw;
+    min-height: 100dvh;
+    margin-left: calc(-1 * var(--bl-page-margin))
+  }
+
+  .card-title {
+    @include headline-2();
+    text-align: center;
+  }
+}
+
+.form-errors {
+  --bl-foreground-color: #{$critical-700};
+  color: var(--bl-foreground-color);
+  margin-top: 2rem;
+
+  @include above-breakpoint('small') {
+    margin-top: 3rem;
+  }
+
+  p {
+    @include body-3();
+    text-align: center;
+
+    @include under-breakpoint('small') {
+      margin-bottom: 0.5rem;
+    }
+
+    &:last-child {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+.auth-form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+
+  fieldset {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
