@@ -1,9 +1,9 @@
 <main class="page-content container">
-  <article class="form-card">
-    <sm-button label="Retour" buttonStyle="ghost" link="/" class="back-button"/>
-    <h1 class="card-title">Inscription</h1>
+  <article class="onboarding-card">
+    <sm-button label="Retour" buttonStyle="ghost" link="/login" class="back-button"/>
+    <h1 class="onboarding-card__title">Inscription</h1>
     @if (httpErrors()) {
-      <div class="form-errors">
+      <div class="onboarding-card__form-errors">
         @for (error of httpErrors(); track error.message) {
           <p><b>{{ error.message }}</b></p>
         }

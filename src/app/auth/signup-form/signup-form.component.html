@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="auth-form">
+<form (ngSubmit)="onSubmit()" [formGroup]="signupForm" class="onboarding-card__form">
   <fieldset>
     <sm-input
       label="E-mail"
@@ -6,7 +6,7 @@
       inputId="email"
       [formControl]="signupForm.controls.email"
       [value]="email!.value"
-      [invalid]="email?.invalid && email?.dirty && email?.touched"
+      [invalid]="isInvalidAndActioned(email)"
       [error]="emailError()"
       [onChange]="onInputChange.bind(this)"
     />
@@ -16,7 +16,7 @@
       inputId="username"
       [formControl]="signupForm.controls.username"
       [value]="username!.value"
-      [invalid]="username?.invalid && username?.dirty && username?.touched"
+      [invalid]="isInvalidAndActioned(username)"
       [error]="usernameError()"
       [onChange]="onInputChange.bind(this)"
     />
@@ -26,33 +26,33 @@
       inputId="fullname"
       [formControl]="signupForm.controls.fullName"
       [value]="fullName!.value"
-      [invalid]="fullName?.invalid && fullName?.dirty && fullName?.touched"
+      [invalid]="isInvalidAndActioned(fullName)"
       [error]="fullNameError()"
       [onChange]="onInputChange.bind(this)"
     />
     <sm-input
       label="Mot de passe"
-      inputType="text"
+      inputType="password"
       inputId="password"
       [formControl]="signupForm.controls.password"
       [value]="password!.value"
-      [invalid]="password?.invalid && password?.dirty && password?.touched"
+      [invalid]="isInvalidAndActioned(password)"
       [error]="passwordError()"
       [onChange]="onInputChange.bind(this)"
     />
     <sm-input
       label="Mot de passe (confirmation)"
-      inputType="text"
+      inputType="password"
       inputId="password-confirmation"
       [formControl]="signupForm.controls.passwordConfirmation"
       [value]="passwordConfirmation!.value"
       [invalid]="
-        (passwordConfirmation?.invalid && passwordConfirmation?.dirty && passwordConfirmation?.touched)
-        || (passwordConfirmation?.value !== password?.value && passwordConfirmation?.dirty && passwordConfirmation?.touched)
+        isInvalidAndActioned(passwordConfirmation)
+        || (!arePasswordsEqual() && hasBeenUserAction(passwordConfirmation))
       "
       [error]="passwordConfirmationError()"
       [onChange]="onInputChange.bind(this)"
     />
   </fieldset>
-  <sm-button label="Créer mon compte" buttonType="submit" buttonStyle="filled" [disabled]="!signupForm.valid || passwordConfirmation?.value !== password?.value" />
+  <sm-button label="Créer mon compte" buttonType="submit" buttonStyle="filled" />
 </form>

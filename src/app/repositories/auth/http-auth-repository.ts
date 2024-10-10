@@ -3,6 +3,7 @@ import { AuthRepository } from "../../../domain/contracts/repositories/auth-repo
 import { User } from "../../../domain/entities/user";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { LoginUserInputDTO } from "../../../domain/contracts/dto/user/login-user-input-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,13 @@ export class HttpAuthRepository implements AuthRepository {
   constructor(private http: HttpClient) {}
 
   signup(user: User): Observable<any> {
+    return this.http.post(
+      `${this.API}/signup`,
+      { data: user }
+    );
+  }
+
+  login(user: LoginUserInputDTO): Observable<any> {
     return this.http.post(
       `${this.API}/signup`,
       { data: user }

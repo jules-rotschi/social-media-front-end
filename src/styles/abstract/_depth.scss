@@ -1,19 +1,7 @@
 @use '../tokens/' as *;
 
-@mixin shadow-1 {
+@mixin shadow {
   html[data-theme="light"] & {
-    box-shadow: 2px 2px 0.5rem 0px $bl-sys-color-dark-opacity-20;
+    box-shadow: 2px 4px 0.5rem 1px $bl-sys-color-dark-opacity-20;
   }
 } 
-
-@mixin shadow-2 {
-  html[data-theme="light"] & {
-    box-shadow: 2px 2px 0.5rem 1px $bl-sys-color-dark-opacity-30;
-  }
-}
-
-@mixin shadow-3 {
-  html[data-theme="light"] & {
-    box-shadow: 2px 2px 0.5rem 2px $bl-sys-color-dark-opacity-40;
-  }
-}

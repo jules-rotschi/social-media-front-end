@@ -1,0 +1,28 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="onboarding-card__form">
+  <fieldset>
+    <sm-input
+      label="E-mail ou nom d'utilisateur"
+      inputType="text"
+      inputId="uid"
+      [formControl]="loginForm.controls.uid"
+      [value]="uid!.value"
+      [invalid]="uid?.invalid && uid?.dirty && uid?.touched"
+      [error]="uidError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+    <sm-input
+      label="Mot de passe"
+      inputType="password"
+      inputId="password"
+      [formControl]="loginForm.controls.password"
+      [value]="password!.value"
+      [invalid]="password?.invalid && password?.dirty && password?.touched"
+      [error]="passwordError()"
+      [onChange]="onInputChange.bind(this)"
+    />
+  </fieldset>
+  <div class="buttons">
+    <sm-button label="Se connecter" buttonType="submit" buttonStyle="filled" />
+    <sm-button label="Mot de passe oublié" buttonType="submit" buttonStyle="ghost" />
+  </div>
+</form>

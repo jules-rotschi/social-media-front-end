@@ -1,0 +1,30 @@
+<main class="page-content container">
+  <header class="go-to-signup">
+    <div class="go-to-signup__title">Vous n'avez pas de compte ?</div>
+    <div class="buttons">
+      <sm-button label="Créer un compte" buttonStyle="filled" link="/signup" />
+      <sm-button label="Connexion anonyme" buttonStyle="outlined" link="/" />
+    </div>
+  </header>
+  <div class="flex-wrapper">
+    <hgroup class="website-introduction">
+      <h1 class="website-introduction__title">Social Media</h1>
+      <h2 class="website-introduction__subtitle">Un réseau social sans publicité et sans l'influence de Tiktok !</h2>
+      <div class="website-introduction__buttons">
+        <sm-button label="Créer un compte" buttonStyle="filled" link="/signup" />
+        <sm-button label="Connexion anonyme" buttonStyle="outlined" link="/" />
+      </div>
+    </hgroup>
+    <article class="onboarding-card">
+      <h2 class="onboarding-card__title">Connexion</h2>
+      @if (httpErrors()) {
+        <div class="onboarding-card__form-errors">
+          @for (error of httpErrors(); track error.message) {
+            <p><b>{{ error.message }}</b></p>
+          }
+        </div>
+      }
+      <sm-login-form [login]="login.bind(this)"></sm-login-form>
+    </article>
+  </div>
+</main>

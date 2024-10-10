@@ -6,6 +6,7 @@ import { SignupComponent } from './auth/pages/signup/signup.component';
 import { RouterOutlet } from '@angular/router';
 import { StorageRepository } from '../domain/contracts/repositories/storage-repository';
 import { LocalStorageRepository } from './repositories/storage/local-storage-repository';
+import { LoginUsecase } from '../domain/usecases/auth/login-usecase';
 
 @Component({
   selector: 'social-media',
@@ -15,6 +16,7 @@ import { LocalStorageRepository } from './repositories/storage/local-storage-rep
   styleUrl: './app.component.scss',
   providers: [
     SignupUsecase,
+    LoginUsecase,
     {
       provide: AuthRepository,
       useClass: HttpAuthRepository

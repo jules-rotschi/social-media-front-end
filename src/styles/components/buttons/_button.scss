@@ -51,20 +51,21 @@
   }
 
   &.button-outlined {
-    border: 1px solid;
-    border-color: var(--bl-outlined-border-color);
+    outline: 1px solid;
+    outline-color: var(--bl-outlined-border-color);
+    outline-offset: -1px;
     color: var(--bl-outlined-foreground-color);
     background: none;
 
     &:not(:disabled):hover {
-      border-width: 2px;
-      border-color: var(--bl-outlined-hover-border-color);
+      outline-width: 2px;
+      outline-color: var(--bl-outlined-hover-border-color);
       background-color: var(--bl-outlined-hover-background-color);
     }
 
     &:not(:disabled):active {
-      border-width: 2px;
-      border-color: var(--bl-outlined-active-border-color);
+      outline-width: 2px;
+      outline-color: var(--bl-outlined-active-border-color);
       background-color: var(--bl-outlined-active-background-color);
     }
   }
