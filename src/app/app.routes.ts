@@ -4,9 +4,14 @@ import { LoginComponent } from './auth/pages/login/login.component';
 
 export const routes: Routes = [
   {
-    path: 'signup', component: SignupComponent
+    path: 'inscription',
+    component: SignupComponent
   },
   {
-    path: 'login', component: LoginComponent
-  }
+    path: 'connexion',
+    component: LoginComponent
+  },
+  // {
+  //   path: 'connexion-anonyme',
+  // }
 ];

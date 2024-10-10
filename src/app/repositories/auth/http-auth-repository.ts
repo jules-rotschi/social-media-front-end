@@ -23,7 +23,7 @@ export class HttpAuthRepository implements AuthRepository {
 
   login(user: LoginUserInputDTO): Observable<any> {
     return this.http.post(
-      `${this.API}/signup`,
+      `${this.API}/login`,
       { data: user }
     );
   }

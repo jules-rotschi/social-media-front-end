@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IconComponent } from '../icon/icon.component';
+import { IconComponent } from '../icons/icon/icon.component';
 
 @Component({
   selector: 'sm-button',

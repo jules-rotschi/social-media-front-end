@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ButtonComponent } from "../../../components/button/button.component";
 import { SignupUserInputDTO } from '../../../../domain/contracts/dto/user/signup-user-input-dto';
 import { SignupFormComponent } from '../../signup-form/signup-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sm-signup',
@@ -21,7 +22,8 @@ export class SignupComponent implements OnDestroy {
 
   constructor(
     private signupUsecase: SignupUsecase,
-    private storageRepository: StorageRepository
+    private storageRepository: StorageRepository,
+    private router: Router
   ) {}
 
   signup(data: SignupUserInputDTO) {
@@ -30,6 +32,7 @@ export class SignupComponent implements OnDestroy {
         next: (response) => {
           this.httpErrors.set([]);
           this.storageRepository.storeToken(response.data.token);
+          this.router.navigateByUrl('/')
         },
         error: ({ error }) => {
           this.httpErrors.set(error.errors);

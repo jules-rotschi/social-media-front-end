@@ -2,7 +2,7 @@
   <label [for]='inputId'>{{label}}</label>
   <div class="field">
     <input
-      [type]='inputType'
+      [type]='domType()'
       [id]='inputId'
       [placeholder]='inputPlaceholder'
       [formControl]='formControl'
@@ -12,6 +12,17 @@
     />
     @if (unit) {
       <span class="unit">{{unit}}</span>
+    }
+    @if (inputType === 'password') {
+      <button type="button" class="show-password-button" (click)="togglePasswordVisibility()">
+        @if (isPasswordVisible()) {
+          Hide
+          <icon-invisible size="16" />
+        } @else {
+          Show
+          <icon-visible size="16" />
+        }
+      </button>
     }
   </div>
   @if (error || legend) {

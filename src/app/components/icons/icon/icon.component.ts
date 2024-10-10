@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './icon.component.scss'
 })
 export class IconComponent {
-  @Input() size = '24';
+  @Input() size? = '24';
 }

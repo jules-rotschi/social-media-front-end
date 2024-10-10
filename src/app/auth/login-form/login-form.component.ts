@@ -1,5 +1,5 @@
 import { Component, Input, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '../../components/input/input.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginForm } from './login-contract';
@@ -46,18 +46,35 @@ export class LoginFormComponent {
   uidError = signal('');
   passwordError = signal('');
 
-  onInputChange() {   
-    if (this.uid?.invalid && this.uid?.dirty && this.uid?.touched && this.uid?.hasError('required')) {
+  hasUserTriedToLogin = false;
+
+  hasBeenUserAction(control: AbstractControl<string, string> | null) {
+    return ((control?.dirty && control?.touched) || this.hasUserTriedToLogin);
+  }
+
+  isInvalidAndActioned(control: AbstractControl<string, string> | null) {
+    return control?.invalid && this.hasBeenUserAction(control);
+  }
+
+  setUidError() {
+    if (this.isInvalidAndActioned(this.uid) && this.uid?.hasError('required')) {
       this.uidError.set('Vous devez entrer votre nom d\'utilisateur ou e-mail');
     } else {
       this.uidError.set('');
     }
+  }
 
-    if (this.password?.invalid && this.password?.dirty && this.password?.touched && this.password?.hasError('required')) {
+  setPasswordError() {
+    if (this.isInvalidAndActioned(this.password) && this.password?.hasError('required')) {
       this.passwordError.set('Vous devez entrer votre mot de passe');
     } else {
       this.passwordError.set('');
     }
+  }
+
+  onInputChange() {
+    this.setUidError();
+    this.setPasswordError();
   }
 
   @Input() login(data: LoginUserInputDTO): void {};
@@ -67,5 +84,7 @@ export class LoginFormComponent {
       const data = this.loginForm.getRawValue();
       this.login(data);
     }
+    this.hasUserTriedToLogin = true;
+    this.onInputChange();
   }
 }

@@ -6,7 +6,7 @@
       inputId="uid"
       [formControl]="loginForm.controls.uid"
       [value]="uid!.value"
-      [invalid]="uid?.invalid && uid?.dirty && uid?.touched"
+      [invalid]="isInvalidAndActioned(uid)"
       [error]="uidError()"
       [onChange]="onInputChange.bind(this)"
     />
@@ -16,7 +16,7 @@
       inputId="password"
       [formControl]="loginForm.controls.password"
       [value]="password!.value"
-      [invalid]="password?.invalid && password?.dirty && password?.touched"
+      [invalid]="isInvalidAndActioned(password)"
       [error]="passwordError()"
       [onChange]="onInputChange.bind(this)"
     />

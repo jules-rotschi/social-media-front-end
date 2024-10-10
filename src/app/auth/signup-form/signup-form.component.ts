@@ -181,7 +181,7 @@ export class SignupFormComponent {
   @Input() signup(data: SignupUserInputDTO): void {};
 
   onSubmit() {
-    if (this.signupForm.valid && this.passwordConfirmation?.value == this.password?.value) {
+    if (this.signupForm.valid && this.arePasswordsEqual()) {
       const data = this.signupForm.getRawValue();
       this.signup(data);
     }
