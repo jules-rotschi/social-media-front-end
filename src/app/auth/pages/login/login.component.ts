@@ -4,8 +4,9 @@ import { ButtonComponent } from '../../../components/button/button.component';
 import { LoginFormComponent } from '../../login-form/login-form.component';
 import { HttpError } from '../../../errors/http-error';
 import { LoginUsecase } from '../../../../domain/usecases/auth/login-usecase';
-import { StorageRepository } from '../../../../domain/contracts/repositories/storage-repository';
+import { ClientSideStorageRepository } from '../../../../domain/contracts/repositories/client-side-storage-repository';
 import { LoginUserInputDTO } from '../../../../domain/contracts/dto/user/login-user-input-dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sm-login',
@@ -20,16 +21,19 @@ export class LoginComponent {
   httpErrors = signal<HttpError[]>([]);
 
   constructor(
-    private loginUseCase: LoginUsecase,
-    private storageRepository: StorageRepository
+    private loginUsecase: LoginUsecase,
+    private clientSideStorageRepository: ClientSideStorageRepository,
+    private router: Router
   ) {}
 
   login(data: LoginUserInputDTO) {
-    this.subscription = this.loginUseCase.handle(data).subscribe(
+    this.subscription = this.loginUsecase.handle(data).subscribe(
       {
         next: (response) => {
           this.httpErrors.set([]);
-          this.storageRepository.storeToken(response.data.token);
+          this.clientSideStorageRepository.storeToken(response.data.token);
+          this.clientSideStorageRepository.storeAnonymousMode(false);
+          this.router.navigateByUrl('/');
         },
         error: ({ error }) => {
           this.httpErrors.set(error.errors);

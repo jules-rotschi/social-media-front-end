@@ -3,7 +3,7 @@
     <div class="go-to-signup__title">Vous n'avez pas de compte ?</div>
     <div class="buttons">
       <sm-button label="Créer un compte" buttonStyle="filled" link="/inscription" />
-      <sm-button label="Connexion anonyme" buttonStyle="outlined" link="/" />
+      <sm-button label="Connexion anonyme" buttonStyle="outlined" link="/connexion-anonyme" />
     </div>
   </header>
   <div class="flex-wrapper">
@@ -24,7 +24,7 @@
           }
         </div>
       }
-      <sm-login-form [login]="login.bind(this)"></sm-login-form>
+      <sm-login-form [login]="login.bind(this)" class="onboarding-card__form-component"></sm-login-form>
     </article>
   </div>
 </main>

@@ -4,9 +4,10 @@ import { HttpAuthRepository } from './repositories/auth/http-auth-repository';
 import { SignupUsecase } from '../domain/usecases/auth/signup-usecase';
 import { SignupComponent } from './auth/pages/signup/signup.component';
 import { RouterOutlet } from '@angular/router';
-import { StorageRepository } from '../domain/contracts/repositories/storage-repository';
-import { LocalStorageRepository } from './repositories/storage/local-storage-repository';
+import { ClientSideStorageRepository } from '../domain/contracts/repositories/client-side-storage-repository';
+import { LocalStorageRepository } from './repositories/client-side-storage/local-storage-repository';
 import { LoginUsecase } from '../domain/usecases/auth/login-usecase';
+import { ForgottenPasswordUsecase } from '../domain/usecases/auth/forgotten-password-usecase';
 
 @Component({
   selector: 'social-media',
@@ -17,12 +18,13 @@ import { LoginUsecase } from '../domain/usecases/auth/login-usecase';
   providers: [
     SignupUsecase,
     LoginUsecase,
+    ForgottenPasswordUsecase,
     {
       provide: AuthRepository,
       useClass: HttpAuthRepository
     },
     {
-      provide: StorageRepository,
+      provide: ClientSideStorageRepository,
       useClass: LocalStorageRepository
     }
   ]

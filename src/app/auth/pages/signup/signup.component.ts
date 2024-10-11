@@ -1,6 +1,6 @@
 import { Component, OnDestroy, signal } from '@angular/core';
 import { SignupUsecase } from '../../../../domain/usecases/auth/signup-usecase';
-import { StorageRepository } from '../../../../domain/contracts/repositories/storage-repository';
+import { ClientSideStorageRepository } from '../../../../domain/contracts/repositories/client-side-storage-repository';
 import { HttpError } from '../../../errors/http-error';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from "../../../components/button/button.component";
@@ -22,7 +22,7 @@ export class SignupComponent implements OnDestroy {
 
   constructor(
     private signupUsecase: SignupUsecase,
-    private storageRepository: StorageRepository,
+    private clientSideStorageRepository: ClientSideStorageRepository,
     private router: Router
   ) {}
 
@@ -31,8 +31,9 @@ export class SignupComponent implements OnDestroy {
       {
         next: (response) => {
           this.httpErrors.set([]);
-          this.storageRepository.storeToken(response.data.token);
-          this.router.navigateByUrl('/')
+          this.clientSideStorageRepository.storeToken(response.data.token);
+          this.clientSideStorageRepository.storeAnonymousMode(false);
+          this.router.navigateByUrl('/');
         },
         error: ({ error }) => {
           this.httpErrors.set(error.errors);

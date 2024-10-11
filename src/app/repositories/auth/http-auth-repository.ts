@@ -1,16 +1,15 @@
 import { Observable } from "rxjs";
 import { AuthRepository } from "../../../domain/contracts/repositories/auth-repository";
-import { User } from "../../../domain/entities/user";
+import { User, UserUID } from "../../../domain/entities/user";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { LoginUserInputDTO } from "../../../domain/contracts/dto/user/login-user-input-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpAuthRepository implements AuthRepository {
 
-  API = "http://localhost:3333"
+  API = "http://localhost:3333";
 
   constructor(private http: HttpClient) {}
 
@@ -21,10 +20,17 @@ export class HttpAuthRepository implements AuthRepository {
     );
   }
 
-  login(user: LoginUserInputDTO): Observable<any> {
+  login(uid: UserUID, password: User['password']): Observable<any> {
     return this.http.post(
       `${this.API}/login`,
-      { data: user }
+      { data: { uid, password } }
     );
+  }
+
+  sendResetPasswordEmail(email: User['email']): Observable<any> {
+    return this.http.post(
+      `${this.API}/forgotten-password`,
+      { data: { email } }
+    )
   }
 }

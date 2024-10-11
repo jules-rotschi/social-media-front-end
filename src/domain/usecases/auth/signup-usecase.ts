@@ -11,13 +11,14 @@ export class SignupUsecase {
   constructor(private authRepository: AuthRepository) {}
 
   handle(user: SignupUserInputDTO) {
-    const userToSignup = new User(
-      user.username,
-      user.email,
-      user.fullName,
-      user.password
-    )
+    
+    const userToSignup = new User();
+    userToSignup.username = user.username;
+    userToSignup.email = user.email;
+    userToSignup.fullName = user.fullName;
+    userToSignup.password = user.password;
     userToSignup.passwordConfirmation = user.passwordConfirmation;
+
     return this.authRepository.signup(userToSignup);
   }
 }

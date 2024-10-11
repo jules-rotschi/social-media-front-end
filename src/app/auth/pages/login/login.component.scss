@@ -1,14 +1,5 @@
 @use '../../../../styles/abstract' as *;
 
-.container {
-  @include above-breakpoint('small') {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: 8rem;
-  }
-}
-
 .flex-wrapper {
   @include above-breakpoint('small') {
     @include row(center, space-between);
@@ -21,26 +12,12 @@
   }
 }
 
-.onboarding-card {
-  padding-top: 4rem;
-  
+.onboarding-card {  
   @include above-breakpoint('small') {
     width: 22.5rem;
   }
 
   @include under-breakpoint('small') {
     min-height: calc(100dvh - 11.5rem);
-  }
-}
-
-sm-login-form {
-  width: 100%;
-
-  @include under-breakpoint('small') {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: stretch;
   }
 }

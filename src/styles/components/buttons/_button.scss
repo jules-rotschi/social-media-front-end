@@ -91,5 +91,6 @@
 
   .label {
     @include label-2();
+    text-align: center;
   }
 }

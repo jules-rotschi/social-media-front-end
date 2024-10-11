@@ -3,13 +3,19 @@
 
 @use './abstract' as *;
 
-:root {
+:root:has(.onboarding-card) {
   --bl-header-height: 0px;
   --bl-footer-height: 0px;
 }
 
 .container:has(.onboarding-card) {
   @include above-breakpoint('small') {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 8rem;
+
     html[data-theme="light"] & {
       background: linear-gradient(135deg, $primary-050 35%, $primary-300);
     }
@@ -33,12 +39,22 @@
 
 .website-introduction__title {
   @include website-title();
-  color: $primary-950;
+  html[data-theme="light"] & {
+    color: $primary-950;
+  }
+  html[data-theme="dark"] & {
+    color: $primary-050;
+  }
 }
 
 .website-introduction__subtitle {
-  color: $primary-950;
   @include website-subtitle();
+  html[data-theme="light"] & {
+    color: $primary-900;
+  }
+  html[data-theme="dark"] & {
+    color: $primary-100;
+  }
 }
 
 .website-introduction__buttons {
@@ -56,9 +72,16 @@
   gap: 1.5rem;
   border-radius: 0 0 2rem 2rem;
   padding: 2rem;
-  background-color: $primary-050;
   z-index: 1;
   @include shadow();
+
+  html[data-theme="light"] & {
+    background-color: $primary-050;
+  }
+
+  html[data-theme="dark"] & {
+    background-color: $neutral-900;
+  }
 
   @include above-breakpoint('small') {
     display: none;
@@ -83,6 +106,7 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  padding-top: 4rem;
   
   @include above-breakpoint('small') {
     border-radius: 2rem;
@@ -92,6 +116,12 @@
     width: 100vw;
     min-height: 100dvh;
     margin-left: calc(-1 * var(--bl-page-margin))
+  }
+
+  &:has(> .back-button) {
+    @include above-breakpoint('small') {
+      padding-top: 6rem;
+    }
   }
 
   .back-button {
@@ -116,8 +146,17 @@
   text-align: center;
 }
 
+.onboarding-card__paragraph {
+  @include body-2();
+}
+
 .onboarding-card__form-errors {
-  --bl-foreground-color: #{$critical-700};
+  html[data-theme="light"] & {
+    --bl-foreground-color: #{$critical-700};
+  }
+  html[data-theme="dark"] & {
+    --bl-foreground-color: #{$critical-400};
+  }
   color: var(--bl-foreground-color);
   margin-top: 2rem;
 
@@ -139,6 +178,18 @@
   }
 }
 
+.onboarding-card__form-component {
+  width: 100%;
+
+  @include under-breakpoint('small') {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+}
+
 .onboarding-card__form {
   flex-grow: 1;
   display: flex;
@@ -154,4 +205,26 @@
 
 .onboarding-card__form .button, .go-to-signup .button {
   width: 100%;
+}
+
+.onboarding-card__content {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+
+  .onboarding-card__paragraph {  
+    html[data-theme="light"] & {
+      --bl-foreground-color: #{$neutral-800};
+    }
+  
+    html[data-theme="dark"] & {
+      --bl-foreground-color: #{$neutral-200};
+    }
+
+    color: var(--bl-foreground-color);
+  }
+
+  @include above-breakpoint('small') {
+    margin-top: 3rem;
+  }
 }
