@@ -16,10 +16,8 @@
     @if (inputType === 'password') {
       <button type="button" class="show-password-button" (click)="togglePasswordVisibility()">
         @if (isPasswordVisible()) {
-          Hide
           <icon-invisible size="16" />
         } @else {
-          Show
           <icon-visible size="16" />
         }
       </button>

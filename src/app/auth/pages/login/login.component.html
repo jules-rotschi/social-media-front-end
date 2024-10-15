@@ -17,13 +17,11 @@
     </hgroup>
     <article class="onboarding-card">
       <h2 class="onboarding-card__title">Connexion</h2>
-      @if (httpErrors()) {
-        <div class="onboarding-card__form-errors">
-          @for (error of httpErrors(); track error.message) {
-            <p><b>{{ error.message }}</b></p>
-          }
-        </div>
-      }
+      <div class="onboarding-card__form-errors">
+        @for (error of httpErrors(); track error.message) {
+          <p><b>{{ error.message }}</b></p>
+        }
+      </div>
       <sm-login-form [login]="login.bind(this)" class="onboarding-card__form-component"></sm-login-form>
     </article>
   </div>

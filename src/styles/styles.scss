@@ -211,20 +211,53 @@
   margin-top: 2rem;
   display: grid;
   gap: 1.5rem;
+  color: var(--bl-foreground-color);
 
-  .onboarding-card__paragraph {  
-    html[data-theme="light"] & {
-      --bl-foreground-color: #{$neutral-800};
-    }
-  
-    html[data-theme="dark"] & {
-      --bl-foreground-color: #{$neutral-200};
-    }
+  html[data-theme="light"] & {
+    --bl-foreground-color: #{$neutral-800};
+  }
 
-    color: var(--bl-foreground-color);
+  html[data-theme="dark"] & {
+    --bl-foreground-color: #{$neutral-200};
   }
 
   @include above-breakpoint('small') {
     margin-top: 3rem;
+  }
+
+  svg {
+    place-self: center;
+  }
+}
+
+.show-password-button {
+  padding: 0.25rem;
+  border-radius: 100%;
+  color: var(--bl-foreground-color);
+
+  @include appearence-transition(background-color);
+
+  html[data-theme="light"] & {
+    --bl-foreground-color: #{$neutral-700};
+    --bl-hover-background-color: #{$dark-opacity-10};
+    --bl-active-background-color: #{$dark-opacity-20};
+  }
+
+  html[data-theme="dark"] & {
+    --bl-foreground-color: #{$neutral-300};
+    --bl-hover-background-color: #{$light-opacity-10};
+    --bl-active-background-color: #{$light-opacity-20};
+  }
+
+  &:hover {
+    background-color: var(--bl-hover-background-color);
+  }
+
+  &:active {
+    background-color: var(--bl-active-background-color);
+  }
+
+  & > * {
+    display: grid;
   }
 }

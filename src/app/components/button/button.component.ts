@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IconComponent } from '../icons/icon/icon.component';
 
 @Component({
   selector: 'sm-button',
@@ -14,7 +13,6 @@ export class ButtonComponent implements OnInit {
   @Input({required: true}) buttonStyle: 'filled' | 'outlined' | 'ghost' = 'filled';
   @Input() buttonType: 'button' | 'reset' | 'submit' = 'button';
   @Input() color?: 'neutral' | 'primary' | 'succes' | 'warning' | 'critical' = 'neutral';
-  @Input() icon?: IconComponent;
   @Input() link?: string;
   @Input() externalLink?: boolean;
   @Input() disabled?: boolean;

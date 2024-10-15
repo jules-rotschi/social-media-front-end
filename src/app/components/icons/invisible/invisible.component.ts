@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { IconComponent } from '../icon/icon.component';
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'icon-invisible',
   standalone: true,
-  imports: [IconComponent],
+  imports: [],
   templateUrl: './invisible.component.html',
-  styleUrl: './invisible.component.scss'
+  styleUrl: './invisible.component.scss',
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class InvisibleComponent {
   @Input() size?: string;
